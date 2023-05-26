@@ -33,7 +33,7 @@ def generate_launch_description():
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
     use_composition = LaunchConfiguration('use_composition')
-    use_rviz = LaunchConfiguration('use_rviz')
+    #use_rviz = LaunchConfiguration('use_rviz')
     autostart = LaunchConfiguration('autostart')
     map_yaml_file = LaunchConfiguration('map')
     params_file = LaunchConfiguration('params_file')
@@ -55,10 +55,10 @@ def generate_launch_description():
     declare_autostart = DeclareLaunchArgument(
         'autostart', default_value='True',
         description='Automatically startup the nav2 stack')
-    declare_arg_use_rviz = DeclareLaunchArgument(
-        'use_rviz',
-        default_value='true',
-        description='Set "true" to launch rviz.')
+    #declare_arg_use_rviz = DeclareLaunchArgument(
+    #    'use_rviz',
+    #    default_value='true',
+    #    description='Set "true" to launch rviz.')
     declare_map_yaml = DeclareLaunchArgument(
         'map', default_value=os.path.join(
             get_package_share_directory('raspicat_slam'),
@@ -296,14 +296,14 @@ def generate_launch_description():
         ],
     )
 
-    rviz_config_file = os.path.join(get_package_share_directory('raspicat_navigation'), 
-                                    'config', 'rviz', 'nav2.rviz')
-    rviz2 = Node(package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        output='log',
-        arguments=['-d', rviz_config_file],
-        condition=IfCondition(use_rviz))
+    #rviz_config_file = os.path.join(get_package_share_directory('raspicat_navigation'), 
+    #                                'config', 'rviz', 'nav2.rviz')
+    #rviz2 = Node(package='rviz2',
+    #    executable='rviz2',
+    #    name='rviz2',
+    #    output='log',
+    #    arguments=['-d', rviz_config_file],
+    #    condition=IfCondition(use_rviz))
 
     ld = LaunchDescription()
 
@@ -316,12 +316,12 @@ def generate_launch_description():
     ld.add_action(declare_container_name)
     ld.add_action(declare_use_respawn)
     ld.add_action(declare_log_level)
-    ld.add_action(declare_arg_use_rviz)
+    #ld.add_action(declare_arg_use_rviz)
 
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
     
-    ld.add_action(rviz2)
+    #ld.add_action(rviz2)
     
     return ld
  

@@ -62,7 +62,7 @@ def generate_launch_description():
     declare_map_yaml = DeclareLaunchArgument(
         'map', default_value=os.path.join(
             get_package_share_directory('raspicat_slam'),
-                'config', 'maps', 'iscas_museum_map.yaml'),
+                'config', 'maps', 'navigation_map.yaml'),
                 description='Full path to map yaml file to load')
     declare_params_file = DeclareLaunchArgument(
         'params_file',

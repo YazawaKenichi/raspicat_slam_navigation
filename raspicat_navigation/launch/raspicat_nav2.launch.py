@@ -94,7 +94,6 @@ def generate_launch_description():
     
     lifecycle_nodes = [
         'map_server',
-        'amcl',
         'controller_server',
         'smoother_server',
         'planner_server',
@@ -120,9 +119,9 @@ def generate_launch_description():
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings),
             Node(
-                package='nav2_amcl',
-                executable='amcl',
-                name='amcl',
+                package='emcl2',
+                executable='emcl2_node',
+                name='emcl2',
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,

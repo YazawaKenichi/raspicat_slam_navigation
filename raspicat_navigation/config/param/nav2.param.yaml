@@ -1,6 +1,6 @@
 emcl2:
   ros__parameters:
-    odom_freq: 20
+    odom_freq: 15
     global_frame_id: "map"
     odom_frame_id: "odom"
     base_frame_id: "base_link"
@@ -12,17 +12,17 @@ emcl2:
     initial_pose_y: 0.0
     initial_pose_a: 0.0
     num_particles: 500
-    alpha_threshold: 0.5
+    alpha_threshold: 0.3
     expansion_radius_position: 0.1
     expansion_radius_orientation: 0.2
     extraction_rate: 0.1
     range_threshold: 0.3
     sensor_reset: false
-    odom_fw_dev_per_fw: 0.19
-    odom_fw_dev_per_rot: 0.0001
+    odom_fw_dev_per_fw: 0.5
+    odom_fw_dev_per_rot: 0.2
     odom_rot_dev_per_fw: 0.13
-    odom_rot_dev_per_rot: 0.2
-    laser_likelihood_max_dist: 0.2
+    odom_rot_dev_per_rot: 0.05
+    laser_likelihood_max_dist: 2.0
 
 bt_navigator:
   ros__parameters:
@@ -247,6 +247,7 @@ global_costmap:
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
+        # map_topic: "/iias_nav_map"
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 1.0
@@ -259,10 +260,15 @@ global_costmap:
     ros__parameters:
       use_sim_time: False
 
-map_server:
+navigation_map_server:
   ros__parameters:
     use_sim_time: False
-    yaml_filename: "map.yaml"
+    yaml_filename: "/home/kenzo-fujisaki/raspicat2/src/raspicat_slam_navigation/raspicat_slam/config/maps/iias02_nav.yaml"
+
+localization_map_server:
+  ros__parameters:
+    use_sim_time: False
+    yaml_filename: "/home/kenzo-fujisaki/raspicat2/src/raspicat_slam_navigation/raspicat_slam/config/maps/iias02_local.yaml"
 
 planner_server:
   ros__parameters:

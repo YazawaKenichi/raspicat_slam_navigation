@@ -6,12 +6,12 @@ Panels:
       Expanded:
         - /Global Options1
         - /Raspicat1
-        - /Amcl1
+        - /Emcl21
         - /Global Planner1
         - /Controller1
         - /Waypoint Follower1
       Splitter Ratio: 0.5833333134651184
-    Tree Height: 466
+    Tree Height: 452
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -114,83 +114,13 @@ Visualization Manager:
           Frame Timeout: 15
           Frames:
             All Enabled: false
-            base_footprint:
-              Value: true
-            base_link:
-              Value: true
-            camera_color_frame:
-              Value: true
-            camera_color_optical_frame:
-              Value: true
-            camera_depth_frame:
-              Value: true
-            camera_depth_optical_frame:
-              Value: true
-            camera_link:
-              Value: true
-            caster_link:
-              Value: true
-            caster_wheel_link:
-              Value: true
-            imu_link:
-              Value: true
-            left_front_usensor_link:
-              Value: true
-            left_side_usensor_link:
-              Value: true
-            left_wheel_link:
-              Value: true
-            lidar_link:
-              Value: true
-            lidar_mount_link:
-              Value: true
-            map:
-              Value: true
-            odom:
-              Value: true
-            right_front_usensor_link:
-              Value: true
-            right_side_usensor_link:
-              Value: true
-            right_wheel_link:
-              Value: true
           Marker Scale: 1
           Name: TF
           Show Arrows: true
           Show Axes: true
           Show Names: false
           Tree:
-            map:
-              odom:
-                base_footprint:
-                  base_link:
-                    camera_link:
-                      camera_color_frame:
-                        camera_color_optical_frame:
-                          {}
-                      camera_depth_frame:
-                        camera_depth_optical_frame:
-                          {}
-                    caster_link:
-                      caster_wheel_link:
-                        {}
-                    imu_link:
-                      {}
-                    left_front_usensor_link:
-                      {}
-                    left_side_usensor_link:
-                      {}
-                    left_wheel_link:
-                      {}
-                    lidar_mount_link:
-                      lidar_link:
-                        {}
-                    right_front_usensor_link:
-                      {}
-                    right_side_usensor_link:
-                      {}
-                    right_wheel_link:
-                      {}
+            {}
           Update Interval: 0
           Value: true
       Enabled: true
@@ -201,7 +131,7 @@ Visualization Manager:
           Class: rviz_default_plugins/Map
           Color Scheme: map
           Draw Behind: true
-          Enabled: true
+          Enabled: false
           Name: Map
           Topic:
             Depth: 1
@@ -209,22 +139,27 @@ Visualization Manager:
             Filter size: 10
             History Policy: Keep Last
             Reliability Policy: Reliable
-            Value: /map
+            Value: /local_map
           Update Topic:
             Depth: 5
             Durability Policy: Volatile
             History Policy: Keep Last
             Reliability Policy: Reliable
-            Value: /map_updates
+            Value: /local_map_updates
           Use Timestamp: false
-          Value: true
+          Value: false
         - Alpha: 1
+          Arrow Length: 0.30000001192092896
+          Axes Length: 0.30000001192092896
+          Axes Radius: 0.009999999776482582
           Class: rviz_default_plugins/PoseArray
           Color: 0; 180; 0
           Enabled: true
-          Max Arrow Length: 0.30000001192092896
-          Min Arrow Length: 0.019999999552965164
+          Head Length: 0.07000000029802322
+          Head Radius: 0.029999999329447746
           Name: Emcl2 Particles
+          Shaft Length: 0.23000000417232513
+          Shaft Radius: 0.009999999776482582
           Shape: Arrow (Flat)
           Topic:
             Depth: 5
@@ -354,6 +289,27 @@ Visualization Manager:
             History Policy: Keep Last
             Reliability Policy: Reliable
             Value: /global_costmap/published_footprint
+          Value: true
+        - Alpha: 1
+          Class: rviz_default_plugins/Map
+          Color Scheme: map
+          Draw Behind: true
+          Enabled: true
+          Name: Map
+          Topic:
+            Depth: 1
+            Durability Policy: Transient Local
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /map
+          Update Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /map_updates
+          Use Timestamp: false
           Value: true
       Enabled: true
       Name: Global Planner
@@ -541,7 +497,7 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1001
+  Height: 1009
   Hide Left Dock: false
   Hide Right Dock: true
   Navigation 2:

@@ -30,7 +30,10 @@ def generate_launch_description():
     use_rviz = LaunchConfiguration('use_rviz')
     autostart = LaunchConfiguration('autostart')
     # cartographer_params_file = LaunchConfiguration('cartographer_params_file')
-    cartographer_configuration_basename = LaunchConfiguration("configuration_basename", default = "cartographer.lua")
+    cartographer_configuration_basename = LaunchConfiguration("cartographer_configuration_basename", default = "cartographer.lua")
+    cartographer_config_dir = LaunchConfiguration("cartographer_configuration_directory", default = os.path.join(get_package_share_directory("raspicat_slam"), "config", "param"))
+    cartographer_resolution = LaunchConfiguration("cartographer_resolution", default = "0.05")
+    cartographer_publish_period_sec = LaunchConfiguration("cartographer_publish_period_sec", default = "1.0")
     use_respawn = LaunchConfiguration('use_respawn')
     log_level = LaunchConfiguration('log_level')
 
@@ -49,12 +52,22 @@ def generate_launch_description():
         'use_rviz',
         default_value='true',
         description='Set "true" to launch rviz.')
-    cartographer_config_dir = os.path.join(get_package_share_directory("raspicat_slam"), "config", "param")
+    declare_cartographer_config_dir = DeclareLaunchArgument(
+            'cartographer_config_dir',
+            default_value = os.path.join(get_package_share_directory("raspicat_slam"), "config", "param"),
+            description = 'Directory Path ex) install/package/share/package/config')
     declare_cartographer_configuration_basename = DeclareLaunchArgument(
         'cartographer_configuration_basename',
-        default_value=os.path.join(get_package_share_directory("raspicat_slam"),
-                                   'config', 'param', 'cartographer.lua'),
-        description='Full path to the ROS2 parameters file to use for the cartographer node')
+        default_value = 'cartographer.lua',
+        description = 'config filename in cartographer_config_dir ex) cartographer.lua')
+    declare_cartographer_resolution = DeclareLaunchArgument(
+            "cartographer_resolution",
+            default_value = "0.05",
+            description = "cartographer resolution [float]")
+    declare_cartographer_publish_period_sec = DeclareLaunchArgument(
+            "cartographer_publish_period_sec",
+            default_value = "1.0",
+            description = "cartographer publish period sec [float]")
     declare_use_respawn = DeclareLaunchArgument(
         'use_respawn', default_value='False',
         description='Whether to respawn if a node crashes. Applied when composition is disabled.')
@@ -99,7 +112,7 @@ def generate_launch_description():
                     {'autostart': autostart},
                     {'node_names': lifecycle_nodes}])
     
-    cartographer = Node(
+    cartographer_node = Node(
         package='cartographer_ros',
         executable='cartographer_node',
         name='cartographer_node',
@@ -109,7 +122,18 @@ def generate_launch_description():
             "-configuration_directory", cartographer_config_dir,
             "-configuration_basename", cartographer_configuration_basename]
         )
-    
+
+    cartographer_occupancy = Node(
+            package="cartographer_ros",
+            executable="cartographer_occupancy_grid_node",
+            name="cartographer_occupancy_grid_node",
+            output="screen",
+            parameters=[],
+            arguments = [
+                "-resolution", cartographer_resolution,
+                "-publish_period_sec", cartographer_publish_period_sec]
+            )
+
     rviz2 = Node(
         package='rviz2',
         executable='rviz2',
@@ -121,7 +145,10 @@ def generate_launch_description():
     ld = LaunchDescription()
 
     ld.add_action(declare_namespace)
+    ld.add_action(declare_cartographer_config_dir)
     ld.add_action(declare_cartographer_configuration_basename)
+    ld.add_action(declare_cartographer_resolution)
+    ld.add_action(declare_cartographer_publish_period_sec)
     ld.add_action(declare_use_sim_time)
     ld.add_action(declare_autostart)
     ld.add_action(declare_use_respawn)
@@ -131,7 +158,8 @@ def generate_launch_description():
     ld.add_action(map_saver_server)
     ld.add_action(lifecycle_manager)
 
-    ld.add_action(cartographer)
+    ld.add_action(cartographer_node)
+    ld.add_action(cartographer_occupancy)
     ld.add_action(rviz2)
 
     return ld

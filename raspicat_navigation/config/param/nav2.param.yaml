@@ -9,7 +9,7 @@ emcl2:
     laser_max_range: 100000000.0
     scan_increment: 1
     initial_pose_x: 0.0
-    initial_pose_y: 0.0
+    initial_pose_y: 2.0
     initial_pose_a: 0.0
     num_particles: 500
     alpha_threshold: 0.5
@@ -262,12 +262,12 @@ global_costmap:
 navigation_map_server:
   ros__parameters:
     use_sim_time: False
-    yaml_filename: "/home/ikebe/raspicat2/src/raspicat_slam_navigation/raspicat_slam/config/maps/demo_map_line.yaml"
+    yaml_filename: "/home/amatsukaze/raspicat2/src/raspicat_slam_navigation/raspicat_slam/config/maps/iscas_museum_map_line.yaml"
 
 localization_map_server:
   ros__parameters:
     use_sim_time: False
-    yaml_filename: "/home/ikebe/raspicat2/src/raspicat_slam_navigation/raspicat_slam/config/maps/demo_map.yaml"
+    yaml_filename: "/home/amatsukaze/raspicat2/src/raspicat_slam_navigation/raspicat_slam/config/maps/iscas_museum_map.yaml"
 
 planner_server:
   ros__parameters:
